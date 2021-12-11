@@ -15,7 +15,7 @@ public class BrightToggleable extends BingChillingToggleable {
         this.oldValue = 1;
     }
     @Override
-    public void activate() {
+    public void activate(String fullCommand) {
         this.oldValue = MinecraftClient.getInstance().options.gamma;
         MinecraftClient.getInstance().options.gamma = 999999;
     }

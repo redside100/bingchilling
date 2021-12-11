@@ -22,7 +22,7 @@ public class AutoFishToggleable extends BingChillingToggleable {
         super("AUTOFISH", "AutoFish", rgbToInt(51, 204, 204));
     }
     @Override
-    public void activate() {
+    public void activate(String fullCommand) {
 
     }
 
@@ -35,7 +35,8 @@ public class AutoFishToggleable extends BingChillingToggleable {
     public void tick(MinecraftClient minecraftClient) {
         ClientPlayerEntity player = getPlayer();
         if (player == null) {
-            this.toggle();
+            this.deactivate();
+            this.setEnabled(false);
             return;
         }
         ClientPlayerInteractionManager interactionManager = MinecraftClient.getInstance().interactionManager;

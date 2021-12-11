@@ -26,7 +26,7 @@ public class FreeToggleable extends BingChillingToggleable {
         this.wasFlying = false;
     }
     @Override
-    public void activate() {
+    public void activate(String fullCommand) {
         ClientPlayerEntity player = BingChillingMod.getPlayer();
         this.actualX = player.getX();
         this.actualY = player.getY();
@@ -47,7 +47,8 @@ public class FreeToggleable extends BingChillingToggleable {
     public void tick(MinecraftClient minecraftClient) {
         ClientPlayerEntity player = BingChillingMod.getPlayer();
         if (player == null) {
-            this.toggle();
+            this.deactivate();
+            this.setEnabled(false);
             return;
         }
         player.getAbilities().flying = true;

@@ -19,7 +19,7 @@ public class LocationToggleable extends BingChillingToggleable {
     }
 
     @Override
-    public void activate() {
+    public void activate(String fullCommand) {
 
     }
 

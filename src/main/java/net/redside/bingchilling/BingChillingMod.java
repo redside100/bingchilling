@@ -12,10 +12,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.BookUpdateC2SPacket;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.LiteralText;
-import net.redside.bingchilling.toggleables.AutoFishToggleable;
-import net.redside.bingchilling.toggleables.BrightToggleable;
-import net.redside.bingchilling.toggleables.FreeToggleable;
-import net.redside.bingchilling.toggleables.LocationToggleable;
+import net.redside.bingchilling.toggleables.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,8 +63,12 @@ public class BingChillingMod implements ModInitializer {
 
 	private static void onCommand(String command) {
 		for (BingChillingToggleable toggleable : toggleables) {
-			if (toggleable.getCommand().equals(command)) {
-				toggleable.toggle();
+			String commandMatch = command;
+			if (command.split(" ").length >= 1) {
+				commandMatch = command.split(" ")[0];
+			}
+			if (toggleable.getCommand().equals(commandMatch)) {
+				toggleable.toggle(command);
 				String color = toggleable.isEnabled() ? "§a§l" : "§c§l";
 				getPlayer().sendMessage(new LiteralText(color + "< " + toggleable.getName() + " >"), true);
 				return;

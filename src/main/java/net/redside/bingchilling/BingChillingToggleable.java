@@ -20,10 +20,10 @@ public abstract class BingChillingToggleable {
         return this.command;
     }
 
-    public void toggle() {
+    public void toggle(String fullCommand) {
         this.enabled = !this.enabled;
         if (this.enabled) {
-            this.activate();
+            this.activate(fullCommand);
         } else {
             this.deactivate();
         }
@@ -32,8 +32,11 @@ public abstract class BingChillingToggleable {
     public boolean isEnabled() {
         return this.enabled;
     }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-    public abstract void activate();
+    public abstract void activate(String fullCommand);
     public abstract void deactivate();
     public abstract void tick(MinecraftClient minecraftClient);
     public abstract void render(InGameHud inGameHud);
