@@ -1,15 +1,12 @@
 package net.redside.bingchilling;
 
-import io.netty.handler.codec.EncoderException;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.Packet;
-import net.minecraft.network.packet.c2s.play.BookUpdateC2SPacket;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.LiteralText;
 import net.redside.bingchilling.toggleables.*;
@@ -23,6 +20,7 @@ public class BingChillingMod implements ModInitializer {
 
 	public static boolean DEBUG_OUTPUT = false;
 	private static ArrayList<BingChillingToggleable> toggleables = new ArrayList<>();
+	private static ArrayList<BingChillingSingle> singles = new ArrayList<>();
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -39,6 +37,7 @@ public class BingChillingMod implements ModInitializer {
 		toggleables.add(new BrightToggleable());
 		toggleables.add(new FreeToggleable());
 		toggleables.add(new AutoFishToggleable());
+		toggleables.add(new AutoToolToggleable());
 		ClientTickEvents.END_CLIENT_TICK.register(this::onTick);
 	}
 
@@ -71,6 +70,17 @@ public class BingChillingMod implements ModInitializer {
 				toggleable.toggle(command);
 				String color = toggleable.isEnabled() ? "§a§l" : "§c§l";
 				getPlayer().sendMessage(new LiteralText(color + "< " + toggleable.getName() + " >"), true);
+				return;
+			}
+		}
+		for (BingChillingSingle single : singles) {
+			String commandMatch = command;
+			if (command.split(" ").length >= 1) {
+				commandMatch = command.split(" ")[0];
+			}
+			if (single.getCommand().equals(commandMatch)) {
+				single.run(command);
+				getPlayer().sendMessage(new LiteralText( "§b§l< " + single.getName() + " >"), true);
 				return;
 			}
 		}
