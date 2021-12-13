@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.LiteralText;
+import net.redside.bingchilling.singles.BiomeScanSingle;
 import net.redside.bingchilling.toggleables.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,7 @@ public class BingChillingMod implements ModInitializer {
 		toggleables.add(new FreeToggleable());
 		toggleables.add(new AutoFishToggleable());
 		toggleables.add(new AutoToolToggleable());
+		singles.add(new BiomeScanSingle());
 		ClientTickEvents.END_CLIENT_TICK.register(this::onTick);
 	}
 
